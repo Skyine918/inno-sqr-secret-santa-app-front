@@ -1,0 +1,19 @@
+.absolute-centered {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.no-data-span {
+    padding: 9px;
+    background: #555;
+    border-radius: 20px;
+}
+
+.relative-centered {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
