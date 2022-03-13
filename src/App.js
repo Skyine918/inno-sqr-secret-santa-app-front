@@ -11,6 +11,8 @@ import AppRouter from "./ui/AppRouter";
 import {firebaseConfig} from "./globals";
 import createTheme from "@mui/material/styles/createTheme";
 import Loader from "./ui/Loader";
+import CircularProgress from "@mui/material/CircularProgress";
+import MainPage from "./pages/MainPage";
 
 
 initializeApp(firebaseConfig);
@@ -21,8 +23,7 @@ const App = () => {
     const [firebaseUser, loading, error] = useAuthState(auth);
     console.log(firebaseUser);
 
-    if (loading) return <div style={{width: "100%", height: "90vh", position: "relative"}}><Loader centered={true}/>
-    </div>
+    if (loading) return <CircularProgress color="success" />
 
     const theme = createTheme({
         palette: {
@@ -39,8 +40,9 @@ const App = () => {
 
         <ThemeProvider theme={theme}>
             <BrowserRouter>
-                <Navigation/>
-                <AppRouter user={firebaseUser}/>
+                <MainPage>
+                    <AppRouter user={firebaseUser}/>
+                </MainPage>
             </BrowserRouter>
         </ThemeProvider>
 

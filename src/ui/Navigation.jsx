@@ -140,7 +140,7 @@ const Navigation = () => {
 
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={user !== null ? user.displayName : "username"} src={user !== null ? user.photoURL : ""} />
+                                <Avatar alt={user ? user.displayName : "username"} src={user !== null ? user.photoURL : ""} />
                             </IconButton>
                         </Tooltip>
                         <Menu
