@@ -6,6 +6,7 @@ import {
 import PageNotFound404 from "../pages/404";
 import FirebaseGoogleAuth2Login from "../pages/FirebaseGoogleAuth2Login";
 import InvitationList from "../pages/InvitationsList";
+import GroupsList from "../pages/GroupsList";
 
 const AppRouter = (props) => {
 
@@ -17,7 +18,7 @@ const AppRouter = (props) => {
     } else {
         return <Routes>
             <Route path="/invitations" element={<InvitationList/>}/>
-            <Route path="/groups" element={<div>Группы</div>}/>
+            <Route path="/groups" element={<GroupsList/>}/>
             <Route path="*" element={<PageNotFound404/>}/>
         </Routes>
     }
