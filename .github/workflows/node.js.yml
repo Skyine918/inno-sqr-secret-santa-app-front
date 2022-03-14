@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x]
 
     steps:
     - name: Checkout repository
@@ -27,11 +27,12 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run the tests and generate coverage report
-      run: npm test -- --coverage
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-
     - name: Build
       run: npm run build --if-present
+      
+    - name: Deploy
+      uses: akhileshns/heroku-deploy@v3.4.6
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "sqr_project_front"
+        heroku_email: ${{secrets.HEROKU_EMAIL}}
