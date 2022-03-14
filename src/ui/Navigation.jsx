@@ -123,24 +123,10 @@ const Navigation = () => {
                         {/*</Button>*/}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        {/*<IconButton size="large" aria-label="show 4 new mails" color="inherit">*/}
-                        {/*    <Badge badgeContent={4} color="error">*/}
-                        {/*        <MailIcon />*/}
-                        {/*    </Badge>*/}
-                        {/*</IconButton>*/}
-                        {/*<IconButton*/}
-                        {/*    size="large"*/}
-                        {/*    aria-label="show 17 new notifications"*/}
-                        {/*    color="inherit"*/}
-                        {/*>*/}
-                        {/*    <Badge badgeContent={17} color="error">*/}
-                        {/*        <NotificationsIcon />*/}
-                        {/*    </Badge>*/}
-                        {/*</IconButton>*/}
 
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={user ? user.displayName : "username"} src={user !== null ? user.photoURL : ""} />
+                                <Avatar alt={user ? user.displayName : "username"} src={user ? user.photoURL : ""} />
                             </IconButton>
                         </Tooltip>
                         <Menu

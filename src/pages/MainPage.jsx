@@ -141,14 +141,26 @@ export default function MainPage(props) {
 
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex', alignItems: 'center'}}}>
                         <Button onClick={handleCloseNavMenu} sx={{my: 2, color: 'white', display: 'block', margin: 0}}>
-                            <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}} to="/">SOME
-                                PAGE</Link>
+                            <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}} to="/">SOME PAGE</Link>
                         </Button>
                         <Button onClick={handleCloseNavMenu} sx={{my: 2, color: 'white', display: 'block', margin: 0}}>
-                            <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}}
-                                  to="/about-us">ABOUT US</Link>
+                            <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}} to="/about-us">ABOUT US</Link>
                         </Button>
                     </Box>
+
+                    {user ? (
+                        <Button
+                            color="secondary"
+                            key="1"
+                            onClick={handleCloseNavMenu}
+                            variant="contained"
+                            sx={{ marginRight: '12px' }}
+                        >
+                            {user.displayName}
+                        </Button>
+                    ) : (
+                        ''
+                    )}
 
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
