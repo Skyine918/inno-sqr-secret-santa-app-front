@@ -31,10 +31,12 @@ jobs:
       run: npm run build --if-present
       env:
         CI: false
+        
+    - name: Install Firebase
+      run: npm install --save firebase
+        
+    - name: Install Surge
+      run: npm install -g surge
       
-    - name: Deploy
-      uses: akhileshns/heroku-deploy@v3.4.6
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-        heroku_email: ${{secrets.HEROKU_EMAIL}}
+    - name: Deploy to Surge
+      run: surge ./build https://sqr-project-front.surge.sh --token ${{secrets.SURGE_TOKEN}}
