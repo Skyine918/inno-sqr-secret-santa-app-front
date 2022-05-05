@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import PageNotFound404 from "../pages/404";
 import FirebaseGoogleAuth2Login from "../pages/FirebaseGoogleAuth2Login";
-import InvitationList from "../pages/InvitationsList";
 import GroupsList from "../pages/GroupsList";
 
 const AppRouter = (props) => {
