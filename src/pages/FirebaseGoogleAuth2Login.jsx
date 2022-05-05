@@ -18,14 +18,19 @@ export default function FirebaseGoogleAuth2Login() {
         <div style={{
             marginTop: "20vh",
             padding: "2em 1em 1em 1em",
-            borderRadius: "25px",
             display: "flex",
             flexDirection: "column",
-            background: "#f76C6C",
+            background: "#c33131",
             alignItems: "center"
         }}>
-            <Typography variant="h6" component="h4">
+            <Typography variant="h4" component="h4" style={{color: "white", marginBottom: '0.5em'}}>
                 Sign In
+            </Typography>
+            <div style={{textAlign: "center"}}>
+                <img style={{width: "60%"}} src="secret-santa-picture.jpeg" alt="secret-santa-picture"/>
+            </div>
+            <Typography variant="small" component="p" style={{color: "white", marginBottom: '0.5em'}}>
+                Participate secret santa together with your friends!
             </Typography>
             <Button
                 onClick={loginViaGoogle}
@@ -33,7 +38,7 @@ export default function FirebaseGoogleAuth2Login() {
                 style={{
                     textTransform: "none",
                     paddingRight: "60px",
-                    marginTop: "50px",
+                    marginTop: "10px",
                     background: "white"
                 }}
             >
