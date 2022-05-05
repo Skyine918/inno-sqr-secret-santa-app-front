@@ -12,34 +12,45 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Chip } from '@mui/material'; 
 
+function getStatusColor(status) {
+    switch (status) {
+        case "pending":
+            return "info"
+        case "creator":
+            return "info"
+        case "accepted":
+            return "success"
+        case "denied":
+            return "warning"
+        default:
+            return "primary"
+    }
+}
+
 export default function GroupCard(props) {
 
     console.log(props)
     return (
-        <Card sx={{ minWidth: 275, marginBottom: "1em" }}>
+        <Card className="group-card" sx={{ minWidth: 275, marginBottom: "1em" }}>
             <CardContent>
                 <Typography variant="h5" component="div">
                     {props.name}
-                    
-                    <Button variant="contained" color="primary" sx={{marginLeft: "1em"}}>
-                    More
-                    </Button>
                 </Typography>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Group created 21.12.2020
+                    Gift date: {props.date}
                 </Typography>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Event ends in {props.date}
+                    Event holds in {props.location}
                 </Typography>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Event holds in {props.place}
+                <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                    Total members invited: <b>{props.totalInvitedUsers}</b>
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Total members: {props.totalMembers}
+                <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                    Total members Accepted: <b>{props.totalAcceptedUsers}</b>
                 </Typography>
-                {
-                  props.current ? <Chip label="Now" color="warning" />:  <Chip label="Finished" color="primary" />
-                }
+
+                <Chip label={props.status} color={getStatusColor(props.status)} />
+
 
             </CardContent>
         </Card>

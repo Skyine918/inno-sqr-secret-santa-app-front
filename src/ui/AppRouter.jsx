@@ -13,11 +13,13 @@ const AppRouter = (props) => {
     if (props.user === null) {
         return <Routes>
             <Route path="/login" element={<FirebaseGoogleAuth2Login/>}/>
+            <Route path="/about-us" element={<div>Санта-проект для курса SQR</div>}/>
             <Route path="*" element={<PageNotFound404/>}/>
         </Routes>
     } else {
         return <Routes>
-            <Route path="/invitations" element={<InvitationList/>}/>
+            <Route path="/" element={<GroupsList/>}/>
+            <Route path="/about-us" element={<div>Санта-проект для курса SQR</div>}/>
             <Route path="/groups" element={<GroupsList/>}/>
             <Route path="*" element={<PageNotFound404/>}/>
         </Routes>

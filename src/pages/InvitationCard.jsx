@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -10,13 +9,46 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import {acceptInvitation, declineInvitation} from "../api/invitaitons";
+import {getAuth} from "@firebase/auth";
+import {useAuthState} from "react-firebase-hooks/auth";
+import CircularProgress from "@mui/material/CircularProgress";
+import {useState} from "react";
+import './main-page.css'
 
 export default function InvitationCard(props) {
+    const auth = getAuth();
+    const [user, loading, error] = useAuthState(auth);
+    const [isLoading, setLoading] = useState(false);
+
+    const acceptClick = async (eventId) => {
+        try {
+            setLoading(true);
+            await acceptInvitation(user, eventId)
+            props.onAccept()
+        } catch (err) {
+
+        } finally {
+            setLoading(false)
+        }
+    }
+    const declineClick = async (eventId) => {
+        try {
+            setLoading(true);
+            await declineInvitation(user, eventId)
+            props.onDecline()
+        } catch (err) {
+
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
-        <Card sx={{ minWidth: 275, marginBottom: "1em" }}>
+        <Card className="invitation-card" sx={{ minWidth: 275, marginBottom: "1em" }}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Group created 21.12.2021
+                    Gift date planned: <b>{props.giftDate.split(" ")[0]}</b>
                 </Typography>
                 <Typography variant="h5" component="div">
                     Invitation to: {props.name}
@@ -30,7 +62,7 @@ export default function InvitationCard(props) {
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                         </ListItemAvatar>
                         <ListItemText
-                            primary="Alexander Trushin"
+                            primary={props.creator}
                             secondary={
                                 <React.Fragment>
                                     <Typography
@@ -47,11 +79,13 @@ export default function InvitationCard(props) {
                     </ListItem>
                 </List>
             </CardContent>
+            {isLoading ? <div style={{display: "flex", justifyContent: "center"}}><CircularProgress color="error"/></div> : <div/>}
+
             <CardActions sx={{marginBottom: "1em"}}>
-                <Button variant="contained" color="success">
+                <Button disabled={isLoading} variant="contained" color="success" onClick={() => {acceptClick(props.event_id)}}>
                     Accept
                 </Button>
-                <Button variant="outlined" color="error">
+                <Button disabled={isLoading} variant="outlined" color="error" onClick={() => {declineClick(props.event_id)}}>
                     Decline
                 </Button>
             </CardActions>

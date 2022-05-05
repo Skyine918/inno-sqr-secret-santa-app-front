@@ -140,12 +140,15 @@ export default function MainPage(props) {
                     </Typography>
 
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex', alignItems: 'center'}}}>
-                        <Button onClick={handleCloseNavMenu} sx={{my: 2, color: 'white', display: 'block', margin: 0}}>
-                            <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}} to="/">SOME PAGE</Link>
-                        </Button>
-                        <Button onClick={handleCloseNavMenu} sx={{my: 2, color: 'white', display: 'block', margin: 0}}>
-                            <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}} to="/about-us">ABOUT US</Link>
-                        </Button>
+
+                        <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}} to="/"><Button
+                            onClick={handleCloseNavMenu} sx={{my: 2, color: 'white', display: 'block', margin: 0}}>
+                            SOME PAGE
+                        </Button></Link>
+                        <Link style={{textDecoration: 'none', color: "white", textDecorationLine: true}} to="/about-us">
+                            <Button onClick={handleCloseNavMenu}
+                                    sx={{my: 2, color: 'white', display: 'block', margin: 0}}>ABOUT US</Button>
+                        </Link>
                     </Box>
 
                     {user ? (
@@ -154,7 +157,7 @@ export default function MainPage(props) {
                             key="1"
                             onClick={handleCloseNavMenu}
                             variant="contained"
-                            sx={{ marginRight: '12px' }}
+                            sx={{marginRight: '12px'}}
                         >
                             {user.displayName}
                         </Button>
@@ -220,12 +223,6 @@ export default function MainPage(props) {
                 </DrawerHeader>
                 <Divider/>
                 <List>
-                    <Link to="/invitations"><ListItem button>
-                        <ListItemIcon>
-                            <MailIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary="Invitations"/>
-                    </ListItem></Link>
                     <Link to="/groups"><ListItem button>
                         <ListItemIcon>
                             <GroupsIcon/>

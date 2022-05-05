@@ -45,7 +45,6 @@ const Navigation = () => {
 
     let activeMainPageStyle = window.location.pathname === "/" ? "underline" : "none";
     let activeDonatePageStyle = window.location.pathname === "/groups" ? "underline" : "none";
-    let activeRulesStyle = window.location.pathname === "/rules" ? "underline" : "none";
 
     return (
         <AppBar position="static">
@@ -115,12 +114,6 @@ const Navigation = () => {
                         <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block', margin: 0 }}>
                             <Link style={{ textDecoration: 'none', color: "white", textDecorationLine: activeDonatePageStyle }} to="/groups">GROUPS</Link>
                         </Button>
-                        {/*<Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block', margin: 0 }}>*/}
-                        {/*    <Link style={{ textDecoration: 'none', color: "white", textDecorationLine: activeRulesStyle}} to="/rules">ПРАВИЛА</Link>*/}
-                        {/*</Button>*/}
-                        {/*<Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block', margin: 0 }}>*/}
-                        {/*    <Link style={{ textDecoration: 'none', color: "white", textDecorationLine: activeMemoriesStyle}} to="/memories">MEMORIES</Link>*/}
-                        {/*</Button>*/}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
 
@@ -159,32 +152,6 @@ const Navigation = () => {
             </Container>
         </AppBar>
     );
-
-    // return (
-    //     <Box sx={{flexGrow: 1}}>
-    //         <AppBar position="static">
-    //             <Toolbar>
-    //                 <IconButton
-    //                     size="large"
-    //                     edge="start"
-    //                     color="inherit"
-    //                     aria-label="menu"
-    //                     sx={{mr: 2}}
-    //                 >
-    //                     <MenuIcon/>
-    //                 </IconButton>
-    //                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-    //                     <Link to="/MemoriesPage">Memories</Link>
-    //                 </Typography>
-    //                 {props.user
-    //                     ? <Button color="inherit" onClick={() => {auth.signOut()}}>Logout</Button>
-    //                     : <Button color="inherit"><Link to={ROUTES.LOGIN}>Login</Link></Button>
-    //                 }
-    //
-    //             </Toolbar>
-    //         </AppBar>
-    //     </Box>
-    // );
 }
 
 export default Navigation;

@@ -2,3 +2,17 @@
     height: 90vh;
     background-color: #f0f0f0;
 }
+.invitation-card {
+    cursor: pointer;
+    transition: 0.4s all !important;
+}
+.invitation-card:hover {
+    background-color: #eef;
+}
+.group-card {
+    cursor: pointer;
+    transition: 0.4s all !important;
+}
+.group-card:hover {
+    background-color: #eef;
+}
