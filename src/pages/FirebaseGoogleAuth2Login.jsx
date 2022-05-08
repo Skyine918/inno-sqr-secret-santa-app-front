@@ -1,10 +1,12 @@
-import {GoogleAuthProvider, getAuth, signInWithPopup} from "@firebase/auth";
+import {GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword} from "@firebase/auth";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import {Copyright} from "@mui/icons-material";
-import Box from "@mui/material/Box";
-import React from "react";
+import React, {useState} from "react";
+import SantaTextField from "../ui/SantaMemberEmailField";
+import './login.css'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Avatar from "@mui/material/Avatar";
 
 
 async function loginViaGoogle() {
@@ -13,24 +15,95 @@ async function loginViaGoogle() {
     console.log(userCredential)
 }
 
+
 export default function FirebaseGoogleAuth2Login() {
+    const [authIsLoading, setAuthIsLoading] = useState(false);
+    const [fieldEmail, setFieldEmail] = useState("");
+    const [fieldEmailError, setFieldEmailError] = useState(null);
+
+    const [fieldPassword, setFieldPassword] = useState("");
+    const [fieldPasswordError, setFieldPasswordError] = useState(null);
+
+    async function loginViaPasswordAndEmail() {
+        console.log("called")
+
+        setAuthIsLoading(true);
+        signInWithEmailAndPassword(getAuth(), fieldEmail, fieldPassword)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(error.code)
+                console.log(error.message)
+                console.log(error)
+                switch (error.code) {
+                    case "auth/wrong-password":
+                        setFieldEmailError("Invalid Email Or Password");
+                        return
+                    case "auth/user-disabled":
+                        setFieldEmailError("Account is suspended");
+                        return;
+                }
+            })
+            .finally(() => {
+                setAuthIsLoading(false)
+            });
+
+    }
+
     return (<Container component="main" maxWidth="xs">
         <div style={{
             marginTop: "20vh",
             padding: "2em 1em 1em 1em",
             display: "flex",
             flexDirection: "column",
-            background: "#c33131",
+            background: "white",
             alignItems: "center"
         }}>
-            <Typography variant="h4" component="h4" style={{color: "white", marginBottom: '0.5em'}}>
+            <Avatar sx={{ m: 1, bgcolor: 'green' }}>
+                <LockOutlinedIcon />
+            </Avatar>
+
+            <Typography component="h1" variant="h5">
                 Sign In
             </Typography>
-            <div style={{textAlign: "center"}}>
-                <img style={{width: "60%"}} src="secret-santa-picture.jpeg" alt="secret-santa-picture"/>
-            </div>
-            <Typography variant="small" component="p" style={{color: "white", marginBottom: '0.5em'}}>
-                Participate secret santa together with your friends!
+            <SantaTextField
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="santa-auth-email"
+                label="Email"
+                name="Email"
+                autoComplete="santa-auth-email"
+                autoFocus
+                onChange={(e) => {setFieldEmail(e.target.value)}}
+                helperText={!!fieldEmailError ? fieldEmailError : 'Your email'}
+                error={!!fieldEmailError}
+            />
+            <SantaTextField
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="santa-auth-password"
+                label="Password"
+                type="password"
+                name="Password"
+                autoComplete="santa-auth-password"
+                autoFocus
+                onChange={(e) => {setFieldPassword(e.target.value)}}
+            />
+            <Button variant="contained" color="success" onClick={() => loginViaPasswordAndEmail()} disabled={authIsLoading}>
+                {authIsLoading ? "Loading ..." : "Sign in"}
+            </Button>
+
+            <Typography variant="small" component="p" style={{color: "black", margin: '0.5em 0'}}>
+                OR
             </Typography>
             <Button
                 onClick={loginViaGoogle}

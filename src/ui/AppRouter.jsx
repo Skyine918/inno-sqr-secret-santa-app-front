@@ -12,7 +12,6 @@ const AppRouter = (props) => {
     if (props.user === null) {
         return <Routes>
             <Route path="/login" element={<FirebaseGoogleAuth2Login/>}/>
-            <Route path="/about-us" element={<div>Санта-проект для курса SQR</div>}/>
             <Route path="*" element={<PageNotFound404/>}/>
         </Routes>
     } else {

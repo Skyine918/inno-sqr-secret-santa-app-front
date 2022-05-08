@@ -159,7 +159,7 @@ export default function MainPage(props) {
                             variant="contained"
                             sx={{marginRight: '12px'}}
                         >
-                            {user.displayName}
+                            {!!user.displayName ? user.displayName : user.email}
                         </Button>
                     ) : (
                         ''
@@ -242,7 +242,7 @@ export default function MainPage(props) {
                     ))}
                 </List>
             </Drawer>
-            <Main open={open}>
+            <Main open={open} style={{minHeight: "100vh", backgroundColor: "white"}}>
                 <DrawerHeader/>
                 {props.children}
             </Main>
