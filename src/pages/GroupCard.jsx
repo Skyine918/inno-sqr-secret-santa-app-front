@@ -41,13 +41,13 @@ export default function GroupCard(props) {
             .then((data) => {
 
             })
-            .catch(err => {
+            .catch(error => {
                 if (error.response) {
                     if (error.response.status === 400) {
                         alert(error.response.data.message)
                     }
                 }
-                setWishlistError(err.toString())
+                setWishlistError(error.toString())
             })
             .finally(() => {
                 setWishlistIsLoading(false)
@@ -60,8 +60,13 @@ export default function GroupCard(props) {
             .then((data) => {
 
             })
-            .catch(err => {
-
+            .catch(error => {
+                if (error.response) {
+                    if (error.response.status === 400) {
+                        alert(error.response.data.message)
+                    }
+                }
+                setWishlistError(error.toString())
             })
             .finally(() => {
                 setAssignmentIsLoading(false)
