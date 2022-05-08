@@ -98,7 +98,7 @@ export default function FirebaseGoogleAuth2Login() {
                 autoFocus
                 onChange={(e) => {setFieldPassword(e.target.value)}}
             />
-            <Button variant="contained" color="success" onClick={() => loginViaPasswordAndEmail()} disabled={authIsLoading}>
+            <Button id="sign-in-button" variant="contained" color="success" onClick={() => loginViaPasswordAndEmail()} disabled={authIsLoading}>
                 {authIsLoading ? "Loading ..." : "Sign in"}
             </Button>
 

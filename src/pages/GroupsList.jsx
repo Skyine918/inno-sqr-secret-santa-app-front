@@ -74,7 +74,7 @@ export default function GroupsList() {
                     status={group.status}
                 />)}
             <div style={{textAlign: "center"}}>
-                <Button color="success" style={{margin: "4px"}} variant="contained" onClick={handleOpen}>
+                <Button id="create-event-button" color="success" style={{margin: "4px"}} variant="contained" onClick={handleOpen}>
                     🎅Create Secret Santa Event🎅
                 </Button>
                 <EventCreationModal open={open} handleClose={handleClose} refetch={refetch}/>
