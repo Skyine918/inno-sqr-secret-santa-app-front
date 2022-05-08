@@ -64,6 +64,7 @@ export default function GroupsList() {
                     </Alert>
                 </div>
                 : groups.map((group, key) => <GroupCard
+                    onAction={refetch}
                     user={user}
                     key={key}
                     name={group.name}

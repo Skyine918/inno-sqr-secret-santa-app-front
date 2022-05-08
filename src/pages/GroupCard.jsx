@@ -39,7 +39,7 @@ export default function GroupCard(props) {
         setWishlistIsLoading(true)
         patchWishlist(props.user, wishlist, props.event_id)
             .then((data) => {
-
+                props.onAction()
             })
             .catch(error => {
                 if (error.response) {
@@ -58,15 +58,18 @@ export default function GroupCard(props) {
         setAssignmentIsLoading(true)
         patchAssignees(props.user, props.event_id)
             .then((data) => {
-
+                props.onAction()
             })
             .catch(error => {
                 if (error.response) {
                     if (error.response.status === 400) {
                         alert(error.response.data.message)
                     }
+
+                    if (error.response.status === 406) {
+                        alert(error.response.data.message)
+                    }
                 }
-                setWishlistError(error.toString())
             })
             .finally(() => {
                 setAssignmentIsLoading(false)
@@ -140,7 +143,7 @@ export default function GroupCard(props) {
                     Edit own wishlist
                 </Button>
 
-                {!!props.assignee_wishlist ? <SantaTextField
+                {props.assignee_wishlist !== null ? <SantaTextField
                     disabled
                     margin="normal"
                     required
@@ -149,7 +152,7 @@ export default function GroupCard(props) {
                     type="text"
                     label={props.assignee_email + " Wishlist"}
                     name="Assignee Wishlist"
-                    defaultValue={props.assignee_wishlist}
+                    defaultValue={props.assignee_wishlist === "" ? "User did not filled wishlist =(" : props.assignee_wishlist}
                     autoComplete="santa-event-assignee-wishlist"
                     autoFocus
                     onChange={(e) => {setWishlist(e.target.value)}}
