@@ -65,6 +65,7 @@ export default function EventCreationModal(props) {
         try {
             await createEvent(user, fieldEventName, fieldEventDate, fieldEventLocation, fieldEmails.map(e => e.value))
             props.refetch()
+            props.setOpen(false)
         } catch (error) {
             console.log(error.response.data.message)
             if (error.response) {

@@ -55,7 +55,6 @@ export default function GroupsList() {
 
     }
 
-    console.log("events", events);
     return <div style={{display: "flex"}}>
         <div style={{flex: 1, padding: '4px'}}>
             {groups.length === 0
@@ -77,7 +76,7 @@ export default function GroupsList() {
                 <Button id="create-event-button" color="success" style={{margin: "4px"}} variant="contained" onClick={handleOpen}>
                     🎅Create Secret Santa Event🎅
                 </Button>
-                <EventCreationModal open={open} handleClose={handleClose} refetch={refetch}/>
+                <EventCreationModal open={open} setOpen={setOpen} handleClose={handleClose} refetch={refetch}/>
             </div>
         </div>
 
