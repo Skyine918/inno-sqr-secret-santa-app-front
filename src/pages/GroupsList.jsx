@@ -64,8 +64,14 @@ export default function GroupsList() {
                     </Alert>
                 </div>
                 : groups.map((group, key) => <GroupCard
+                    user={user}
                     key={key}
                     name={group.name}
+                    wishlist={group.wishlist}
+                    creator={group.creator}
+                    assignee_wishlist={group.assignee_wishlist}
+                    assignee_email={group.assignee_email}
+                    event_id={group.event_id}
                     totalInvitedUsers={group.invitations}
                     totalAcceptedUsers={group.accepted_members}
                     location={group.location}

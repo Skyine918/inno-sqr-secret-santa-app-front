@@ -14,3 +14,21 @@ export async function createEvent(user, name, date, location, emails) {
     const response = await baseAPI.post(`/events`, params, {headers: {token: user.accessToken}})
     return response.data
 }
+
+export async function patchWishlist(user, wishlist, event_id) {
+    const params = {
+        wishlist: wishlist,
+        event_id: event_id,
+    };
+    const response = await baseAPI.patch(`/wishlist`, params, {headers: {token: user.accessToken}})
+    return response.data
+}
+
+
+export async function patchAssignees(user, event_id) {
+    const params = {
+        event_id: event_id,
+    };
+    const response = await baseAPI.patch(`/assignee`, params, {headers: {token: user.accessToken}})
+    return response.data
+}
