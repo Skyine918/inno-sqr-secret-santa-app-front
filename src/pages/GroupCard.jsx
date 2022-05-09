@@ -13,33 +13,38 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 function getStatusColor(status) {
     switch (status) {
-        case "pending":
-            return "info"
         case "creator":
             return "info"
         case "accepted":
             return "success"
         case "denied":
             return "warning"
-        default:
-            return "primary"
     }
 }
 
 export default function GroupCard(props) {
-    const [wishlistIsLoading, setWishlistIsLoading] = useState(false);
     const [assignmentIsLoading, setAssignmentIsLoading] = useState(false);
+    const [assignmentUpdated, setAssignmentUpdated] = useState(false);
+    const [assignmentError, setAssignmentError] = useState(null);
+
     const [wishlist, setWishlist] = useState("");
+    const [wishlistIsLoading, setWishlistIsLoading] = useState(false);
+    const [wishlistUpdated, setWishlistUpdated] = useState(false);
     const [wishlistError, setWishlistError] = useState(null);
 
     const onClickPatchWishlist = async () => {
-        setWishlistIsLoading(true)
+        setWishlistIsLoading(true);
+        setWishlistError(null);
+        setWishlistUpdated(false);
         patchWishlist(props.user, wishlist, props.event_id)
             .then((data) => {
                 props.onAction()
+                setWishlistUpdated(true);
             })
             .catch(error => {
                 if (error.response) {
@@ -56,18 +61,22 @@ export default function GroupCard(props) {
 
     const onClickAssignGiftees = async () => {
         setAssignmentIsLoading(true)
+        setAssignmentError(null);
+        setWishlistUpdated(false);
         patchAssignees(props.user, props.event_id)
             .then((data) => {
                 props.onAction()
+                setAssignmentUpdated(true);
             })
             .catch(error => {
+                console.log(error.response)
                 if (error.response) {
                     if (error.response.status === 400) {
-                        alert(error.response.data.message)
+                        setAssignmentError(error.response.data.message)
                     }
 
                     if (error.response.status === 406) {
-                        alert(error.response.data.message)
+                        setAssignmentError(error.response.data.message)
                     }
                 }
             })
@@ -77,7 +86,7 @@ export default function GroupCard(props) {
     }
 
     return (
-        <Card className="group-card" sx={{ minWidth: 275, marginBottom: "1em" }}>
+        <Card data-testid={`group-card-${props.event_id}`} className="group-card" sx={{ minWidth: 275, marginBottom: "1em" }}>
             <CardContent>
                 <Typography variant="h5" component="div">
                     {props.name} <Chip label={props.status} color={getStatusColor(props.status)} />
@@ -118,6 +127,7 @@ export default function GroupCard(props) {
                 </Typography>
 
                 {props.tests ? <SantaTextField
+                    data-testid={`wishlist-input-${props.event_id}`}
                     margin="normal"
                     required
                     fullWidth
@@ -132,6 +142,7 @@ export default function GroupCard(props) {
                     helperText={!!wishlistError ? wishlistError : ''}
                     error={!!wishlistError}
                 /> : <SantaTextField
+                    data-testid={`wishlist-input-${props.event_id}`}
                     margin="normal"
                     required
                     fullWidth
@@ -154,34 +165,56 @@ export default function GroupCard(props) {
                     ? <div style={{display: "flex", justifyContent: "center"}}><CircularProgress color="success"/></div>
                     : <div/>}
 
-                <Button disabled={wishlistIsLoading} variant="contained" color="success" onClick={onClickPatchWishlist}>
-                    Edit own wishlist
-                </Button>
+                {wishlistUpdated
+                    ? <Alert severity="success">
+                        <AlertTitle>Successfully updated your Wishlist</AlertTitle>
+                    </Alert>
+                    : <div></div>
+                }
 
-                {props.assignee_wishlist !== null ? <SantaTextField
+                {!!assignmentError
+                    ? <Alert severity="error">
+                        <AlertTitle>{assignmentError}</AlertTitle>
+                    </Alert>
+                    : <div></div>
+                }
+                <div style={{textAlign: "center", marginTop: "0.5em"}}>
+                    <Button data-testid={`button-edit-wishlist-${props.event_id}`} disabled={wishlistIsLoading} variant="contained" color="success" onClick={onClickPatchWishlist}>
+                        Edit own wishlist
+                    </Button>
+                </div>
+
+                <SantaTextField
                     disabled
                     margin="normal"
                     required
                     fullWidth
                     id="santa-wishlist"
                     type="text"
-                    label={props.assignee_email + " Wishlist"}
+                    label={!props.members_assigned ? "" : props.assignee_email + " wishlist"}
                     name="Assignee Wishlist"
-                    defaultValue={props.assignee_wishlist === "" ? "User did not filled wishlist =(" : props.assignee_wishlist}
+                    defaultValue={props.members_assigned ? ((props.assignee_wishlist === null || props.assignee_wishlist === "") ? "User did not filled wishlist =(" : props.assignee_wishlist) : "Members are not yet assigned" }
                     autoComplete="santa-event-assignee-wishlist"
                     autoFocus
                     onChange={(e) => {setWishlist(e.target.value)}}
-                    helperText={!!wishlistError ? wishlistError : "You are assigned to be secret santa of this person. Here is his wishlist"}
+                    helperText={props.members_assigned ? "You are assigned to be secret santa of this person. Here is his wishlist" : "Members are not yet assigned"}
                     error={!!wishlistError}
                     multiline
                     rows={4}
-                /> : <div></div>}
+                />
 
-                <Button disabled={props.creator !== props.user.email} variant="contained" color="warning" onClick={onClickAssignGiftees}>
-                    {(props.creator === props.user.email) ? "Assign giftees" : "Only creator can assign giftees"}
-                </Button>
+                {assignmentUpdated
+                    ? <Alert severity="success">
+                        <AlertTitle>Successfully assigned secret Santas</AlertTitle>
+                    </Alert>
+                    : <div></div>
+                }
 
-
+                <div style={{textAlign: "center", marginTop: "0.5em"}}>
+                    <Button disabled={props.creator !== props.user.email || props.members_assigned} variant="contained" color="warning" onClick={onClickAssignGiftees} data-testid={`button-assignment-${props.event_id}`}>
+                        {props.members_assigned ? "Already assigned" : (props.creator === props.user.email) ? "Assign giftees" : "Only creator can assign members"}
+                    </Button>
+                </div>
 
 
             </CardContent>

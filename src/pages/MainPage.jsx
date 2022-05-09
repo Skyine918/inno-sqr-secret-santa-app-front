@@ -117,6 +117,7 @@ export default function MainPage(props) {
             <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
+                        data-testid="auth-icon-button"
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}

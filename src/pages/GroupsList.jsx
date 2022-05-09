@@ -15,7 +15,7 @@ import './main-page.css'
 export default function GroupsList() {
 
     const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const {events, eventsAreLoading, isError, eventsError, refetch} = useEvents();
 
     const [open, setOpen] = React.useState(false);
@@ -34,7 +34,7 @@ export default function GroupsList() {
     }
 
     if (eventsAreLoading) {
-        return <div style={{display: "flex", justifyContent: "center"}}><CircularProgress color="error"/></div>
+        return <div data-testid="events-loader" style={{display: "flex", justifyContent: "center"}}><CircularProgress color="error"/></div>
     }
 
     if (isError) {
@@ -55,7 +55,7 @@ export default function GroupsList() {
 
     }
 
-    return <div style={{display: "flex"}}>
+    return <div style={{display: "flex"}} data-testid="events-double-list">
         <div style={{flex: 1, padding: '4px'}}>
             {groups.length === 0
                 ? <div>
@@ -71,6 +71,7 @@ export default function GroupsList() {
                     wishlist={group.wishlist}
                     creator={group.creator}
                     assignee_wishlist={group.assignee_wishlist}
+                    members_assigned={group.members_assigned}
                     assignee_email={group.assignee_email}
                     event_id={group.event_id}
                     totalInvitedUsers={group.invitations}
@@ -80,7 +81,7 @@ export default function GroupsList() {
                     status={group.status}
                 />)}
             <div style={{textAlign: "center"}}>
-                <Button id="create-event-button" color="success" style={{margin: "4px"}} variant="contained" onClick={handleOpen}>
+                <Button data-testid="create-event-button" id="create-event-button" color="success" style={{margin: "4px"}} variant="contained" onClick={handleOpen}>
                     🎅Create Secret Santa Event🎅
                 </Button>
                 <EventCreationModal open={open} setOpen={setOpen} handleClose={handleClose} refetch={refetch}/>

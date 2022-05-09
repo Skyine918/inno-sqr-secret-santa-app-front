@@ -21,7 +21,7 @@ export default function useEvents() {
         getEvents(user)
             .then((result) => {setEvents(result)})
             .catch((err) => {
-                console.log("cringe", err);
+                console.error("Error fetching Events", err);
                 setEventsError(err);
                 setIsError(true)})
             .finally(() => {

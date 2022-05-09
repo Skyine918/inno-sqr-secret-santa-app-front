@@ -2,11 +2,6 @@ import React, {useState} from 'react'
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Input from "@mui/material/Input";
-import FormHelperText from "@mui/material/FormHelperText";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SantaTextField from "../ui/SantaMemberEmailField";
 import {createEvent} from "../api/events";
@@ -99,6 +94,7 @@ export default function EventCreationModal(props) {
             </Typography>
 
             <SantaTextField
+                data-testid="santa-event-name-input"
                 margin="normal"
                 required
                 fullWidth
@@ -139,15 +135,15 @@ export default function EventCreationModal(props) {
 
 
             <div style={{display: "flex", justifyContent: "space-between", padding: '8px', borderBottom: "2px solid black"}}>
-                {fieldEmails.length <= 10 ? <Button variant="contained" color="secondary" onClick={pushEmailField}>
+                {fieldEmails.length <= 10 ? <Button data-testid="button-add-email-field" variant="contained" color="secondary" onClick={pushEmailField}>
                     Add email
-                </Button> : <Button variant="contained" color="secondary" disabled>
+                </Button> : <Button data-testid="button-add-email-field" variant="contained" color="secondary" disabled>
                     10 emails limit
                 </Button>}
 
-                {fieldEmails.length === 0 ? <Button variant="contained" color="secondary" disabled>
+                {fieldEmails.length === 0 ? <Button data-testid="button-remove-email-field" variant="contained" color="secondary" disabled>
                     Remove email
-                </Button> : <Button variant="contained" color="secondary" onClick={removeEmailField}>
+                </Button> : <Button data-testid="button-remove-email-field" variant="contained" color="secondary" onClick={removeEmailField}>
                     Remove email
                 </Button>}
             </div>
@@ -155,6 +151,7 @@ export default function EventCreationModal(props) {
             <div style={{maxHeight: "200px", overflowY: "overlay"}}>
                 {fieldEmails.map((f, i) =>
                     <SantaTextField
+                        data-testid={`member-email-field-${i}`}
                         size="small"
                         key={i}
                         margin="normal"
@@ -181,7 +178,7 @@ export default function EventCreationModal(props) {
                 ? <div style={{display: "flex", justifyContent: "center"}}><CircularProgress color="error"/></div>
                 : <div/>}
 
-            <Button disabled={formIsLoading} variant="contained" color="success" onClick={onClickCreateEvent}>
+            <Button data-testid="create-event-button-final" disabled={formIsLoading} variant="contained" color="success" onClick={onClickCreateEvent}>
                 Create Event
             </Button>
 

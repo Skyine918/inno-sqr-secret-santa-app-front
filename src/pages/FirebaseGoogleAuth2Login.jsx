@@ -30,14 +30,13 @@ export default function FirebaseGoogleAuth2Login() {
         setAuthIsLoading(true);
         signInWithEmailAndPassword(getAuth(), fieldEmail, fieldPassword)
             .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                // ...
+                // react hook did something at this point
             })
             .catch((error) => {
                 switch (error.code) {
                     case "auth/wrong-password":
                         setFieldEmailError("Invalid Email Or Password");
+                        setFieldPasswordError("Invalid Email Or Password");
                         return
                     case 'auth/user-not-found':
                         setFieldEmailError("User with this email not found");
@@ -100,6 +99,8 @@ export default function FirebaseGoogleAuth2Login() {
                 autoComplete="santa-auth-password"
                 autoFocus
                 onChange={(e) => {setFieldPassword(e.target.value)}}
+                helperText={!!fieldPasswordError ? fieldPasswordError : 'Your password'}
+                error={!!fieldPasswordError}
             />
             <Button data-testid="login-button" id="sign-in-button" variant="contained" color="success" onClick={() => loginViaPasswordAndEmail()} disabled={authIsLoading}>
                 {authIsLoading ? "Loading ..." : "Sign in"}
@@ -109,6 +110,7 @@ export default function FirebaseGoogleAuth2Login() {
                 OR
             </Typography>
             <Button
+                data-testid="login-via-google-button"
                 onClick={loginViaGoogle}
                 variant="outlined"
                 style={{

@@ -18,32 +18,17 @@ const auth = getAuth();
 
 
 const App = () => {
-    const [firebaseUser, loading, error] = useAuthState(auth);
-    console.log(firebaseUser);
+    const [firebaseUser, loading] = useAuthState(auth);
+    if (loading)
+        return <div className="main-loader">
+        <CircularProgress color="warning" />
+    </div>
 
-    if (loading) return <div className="main-loader"><CircularProgress color="warning" /></div>
-
-    const theme = createTheme({
-        palette: {
-            primary: {
-                main: '#f76C6C'
-            },
-            secondary: {
-                main: '#f0f0f0'
-            }
-        }
-    });
 
     return (
-
-        <ThemeProvider theme={theme}>
-            <BrowserRouter>
-                <MainPage>
-                    <AppRouter user={firebaseUser}/>
-                </MainPage>
-            </BrowserRouter>
-        </ThemeProvider>
-
+        <MainPage>
+            <AppRouter user={firebaseUser}/>
+        </MainPage>
     )
 }
 

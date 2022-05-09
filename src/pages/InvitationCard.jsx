@@ -82,10 +82,10 @@ export default function InvitationCard(props) {
             {isLoading ? <div style={{display: "flex", justifyContent: "center"}}><CircularProgress color="error"/></div> : <div/>}
 
             <CardActions sx={{marginBottom: "1em"}}>
-                <Button disabled={isLoading} variant="contained" color="success" onClick={() => {acceptClick(props.event_id)}}>
+                <Button data-testid={`button-accept-invitation-${props.event_id}`} disabled={isLoading} variant="contained" color="success" onClick={() => {acceptClick(props.event_id)}}>
                     Accept
                 </Button>
-                <Button disabled={isLoading} variant="outlined" color="error" onClick={() => {declineClick(props.event_id)}}>
+                <Button data-testid={`button-decline-invitation-${props.event_id}`} disabled={isLoading} variant="outlined" color="error" onClick={() => {declineClick(props.event_id)}}>
                     Decline
                 </Button>
             </CardActions>

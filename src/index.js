@@ -3,10 +3,30 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import AppRouter from "./ui/AppRouter";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import createTheme from "@mui/material/styles/createTheme";
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#f76C6C'
+        },
+        secondary: {
+            main: '#f0f0f0'
+        }
+    }
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <ThemeProvider theme={theme}>
+          <BrowserRouter>
+              <App />
+          </BrowserRouter>
+      </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
