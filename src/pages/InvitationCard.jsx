@@ -18,7 +18,7 @@ import './main-page.css'
 
 export default function InvitationCard(props) {
     const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const [isLoading, setLoading] = useState(false);
 
     const acceptClick = async (eventId) => {

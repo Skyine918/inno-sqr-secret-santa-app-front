@@ -43,6 +43,7 @@ export default function GroupCard(props) {
         setWishlistUpdated(false);
         patchWishlist(props.user, wishlist, props.event_id)
             .then((data) => {
+                console.log(data)
                 props.onAction()
                 setWishlistUpdated(true);
             })
@@ -65,6 +66,7 @@ export default function GroupCard(props) {
         setWishlistUpdated(false);
         patchAssignees(props.user, props.event_id)
             .then((data) => {
+                console.log(data)
                 props.onAction()
                 setAssignmentUpdated(true);
             })
@@ -169,14 +171,14 @@ export default function GroupCard(props) {
                     ? <Alert severity="success">
                         <AlertTitle>Successfully updated your Wishlist</AlertTitle>
                     </Alert>
-                    : <div></div>
+                    : <div/>
                 }
 
                 {!!assignmentError
                     ? <Alert severity="error">
                         <AlertTitle>{assignmentError}</AlertTitle>
                     </Alert>
-                    : <div></div>
+                    : <div/>
                 }
                 <div style={{textAlign: "center", marginTop: "0.5em"}}>
                     <Button data-testid={`button-edit-wishlist-${props.event_id}`} disabled={wishlistIsLoading} variant="contained" color="success" onClick={onClickPatchWishlist}>
@@ -207,7 +209,7 @@ export default function GroupCard(props) {
                     ? <Alert severity="success">
                         <AlertTitle>Successfully assigned secret Santas</AlertTitle>
                     </Alert>
-                    : <div></div>
+                    : <div/>
                 }
 
                 <div style={{textAlign: "center", marginTop: "0.5em"}}>

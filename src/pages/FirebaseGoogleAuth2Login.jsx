@@ -30,6 +30,7 @@ export default function FirebaseGoogleAuth2Login() {
         setAuthIsLoading(true);
         signInWithEmailAndPassword(getAuth(), fieldEmail, fieldPassword)
             .then((userCredential) => {
+                console.log(userCredential.providerId)
                 // react hook did something at this point
             })
             .catch((error) => {

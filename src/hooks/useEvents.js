@@ -6,7 +6,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 
 export default function useEvents() {
     const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const [eventsAreLoading, setEventsAreLoading] = useState(true);
     const [refetchState, setRefetchState] = useState(0);
     const [eventsError, setEventsError] = useState(null);
@@ -27,6 +27,6 @@ export default function useEvents() {
             .finally(() => {
                 setEventsAreLoading(false);
             })
-    }, [refetchState])
+    }, [refetchState, user])
     return {events, eventsAreLoading, isError, eventsError, refetch}
 }

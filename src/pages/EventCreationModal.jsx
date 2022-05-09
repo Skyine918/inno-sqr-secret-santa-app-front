@@ -28,7 +28,7 @@ const style = {
 export default function EventCreationModal(props) {
 
     const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
     const [formIsLoading, setFormIsLoading] = useState(false)
     const [fieldEmails, setFieldEmails] = useState([])

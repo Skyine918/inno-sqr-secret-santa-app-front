@@ -79,7 +79,7 @@ export default function MainPage(props) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
     const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -89,12 +89,9 @@ export default function MainPage(props) {
         setOpen(false);
     };
 
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
