@@ -117,7 +117,21 @@ export default function GroupCard(props) {
                     Total members Accepted: <b>{props.totalAcceptedUsers}</b>
                 </Typography>
 
-                <SantaTextField
+                {props.tests ? <SantaTextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="santa-wishlist"
+                    type="text"
+                    label="Own Wishlist"
+                    name="Own Wishlist"
+                    defaultValue={wishlist === "" ? props.wishlist : wishlist}
+                    autoComplete="santa-event-own-wishlist"
+                    autoFocus
+                    onChange={(e) => {setWishlist(e.target.value)}}
+                    helperText={!!wishlistError ? wishlistError : ''}
+                    error={!!wishlistError}
+                /> : <SantaTextField
                     margin="normal"
                     required
                     fullWidth
@@ -133,7 +147,8 @@ export default function GroupCard(props) {
                     error={!!wishlistError}
                     multiline
                     rows={4}
-                />
+                />}
+
 
                 {(wishlistIsLoading || assignmentIsLoading)
                     ? <div style={{display: "flex", justifyContent: "center"}}><CircularProgress color="success"/></div>

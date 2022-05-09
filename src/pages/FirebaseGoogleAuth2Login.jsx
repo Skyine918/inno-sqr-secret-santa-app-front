@@ -35,17 +35,18 @@ export default function FirebaseGoogleAuth2Login() {
                 // ...
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(error.code)
-                console.log(error.message)
-                console.log(error)
                 switch (error.code) {
                     case "auth/wrong-password":
                         setFieldEmailError("Invalid Email Or Password");
                         return
+                    case 'auth/user-not-found':
+                        setFieldEmailError("User with this email not found");
+                        return
                     case "auth/user-disabled":
                         setFieldEmailError("Account is suspended");
+                        return;
+                    case "auth/too-many-requests":
+                        setFieldEmailError("Too many auth requests, please wait a bit.");
                         return;
                 }
             })
@@ -72,6 +73,7 @@ export default function FirebaseGoogleAuth2Login() {
                 Sign In
             </Typography>
             <SantaTextField
+                data-testid="login-email-input"
                 margin="normal"
                 required
                 fullWidth
@@ -86,6 +88,7 @@ export default function FirebaseGoogleAuth2Login() {
                 error={!!fieldEmailError}
             />
             <SantaTextField
+                data-testid="login-password-input"
                 margin="normal"
                 required
                 fullWidth
@@ -98,7 +101,7 @@ export default function FirebaseGoogleAuth2Login() {
                 autoFocus
                 onChange={(e) => {setFieldPassword(e.target.value)}}
             />
-            <Button id="sign-in-button" variant="contained" color="success" onClick={() => loginViaPasswordAndEmail()} disabled={authIsLoading}>
+            <Button data-testid="login-button" id="sign-in-button" variant="contained" color="success" onClick={() => loginViaPasswordAndEmail()} disabled={authIsLoading}>
                 {authIsLoading ? "Loading ..." : "Sign in"}
             </Button>
 
